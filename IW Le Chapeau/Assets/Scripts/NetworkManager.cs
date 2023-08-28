@@ -44,4 +44,9 @@ public class NetworkManager : MonoBehaviour
     {
         PhotonNetwork.LoadLevel(roomName);
     }
+
+    public void ChangeScene(string sceneName) 
+    {
+        PhotonNetwork.LoadLevel(sceneName);
+    }
 }
