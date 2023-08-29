@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class NetworkManager : MonoBehaviour
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
     // Start is called before the first frame update
     void Start()
@@ -49,4 +49,17 @@ public class NetworkManager : MonoBehaviour
     {
         PhotonNetwork.LoadLevel(sceneName);
     }
+
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("Connected to master server");
+        CreateRoom("testroom");
+    }
+
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("Create room: " + PhotonNetwork.CurrentRoom.Name);
+    }
+
+
 }
