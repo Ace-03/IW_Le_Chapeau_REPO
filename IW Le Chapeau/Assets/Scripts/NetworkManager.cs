@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    
+
     // Start is called before the first frame update
     void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
+
+        
     }
 
     // Update is called once per frame
@@ -45,11 +50,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(roomName);
     }
 
+    //change the scene using Photon's system
+    [PunRPC]
     public void ChangeScene(string sceneName) 
     {
         PhotonNetwork.LoadLevel(sceneName);
     }
 
+    // called when we connect to the master server
+    //enable the "Create Room" and "Join Room" buttons
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to master server");
@@ -60,6 +69,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Create room: " + PhotonNetwork.CurrentRoom.Name);
     }
-
-
 }
