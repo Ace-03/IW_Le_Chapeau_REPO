@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Awake()
     {
         // if an instance already exists and it's not this one - destory us
-        if (instance! == null && instance != this)
+        if (instance != null && instance != this)
             gameObject.SetActive(false);
         else
         {

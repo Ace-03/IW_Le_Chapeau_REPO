@@ -254,9 +254,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -267,7 +270,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 1
     aniso: 16
-    mipBias: -100
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -288,10 +291,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -1158,9 +1165,49 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      CharacterSprite2_5: 21300086
+      CharacterSprite2_4: 21300084
+      CharacterSprite2_38: 21300152
+      CharacterSprite2_0: 21300076
+      CharacterSprite2_20: 21300116
+      CharacterSprite2_23: 21300122
+      CharacterSprite2_22: 21300120
+      CharacterSprite2_16: 21300108
+      CharacterSprite2_30: 21300136
+      CharacterSprite2_35: 21300146
+      CharacterSprite2_21: 21300118
+      CharacterSprite2_26: 21300128
+      CharacterSprite2_3: 21300082
+      CharacterSprite2_18: 21300112
+      CharacterSprite2_12: 21300100
+      CharacterSprite2_14: 21300104
+      CharacterSprite2_15: 21300106
+      CharacterSprite2_27: 21300130
+      CharacterSprite2_31: 21300138
+      CharacterSprite2_25: 21300126
+      CharacterSprite2_34: 21300144
+      CharacterSprite2_13: 21300102
+      CharacterSprite2_36: 21300148
+      CharacterSprite2_9: 21300094
+      CharacterSprite2_19: 21300114
+      CharacterSprite2_24: 21300124
+      CharacterSprite2_33: 21300142
+      CharacterSprite2_8: 21300092
+      CharacterSprite2_17: 21300110
+      CharacterSprite2_29: 21300134
+      CharacterSprite2_6: 21300088
+      CharacterSprite2_32: 21300140
+      CharacterSprite2_10: 21300096
+      CharacterSprite2_2: 21300080
+      CharacterSprite2_7: 21300090
+      CharacterSprite2_11: 21300098
+      CharacterSprite2_39: 21300154
+      CharacterSprite2_37: 21300150
+      CharacterSprite2_28: 21300132
+      CharacterSprite2_1: 21300078
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
