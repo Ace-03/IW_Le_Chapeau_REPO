@@ -61,4 +61,55 @@ public class Menu : MonoBehaviourPunCallbacks
     {
         NetworkManager.instance.JoinRoom(roomNameInput.text);
     }
+
+    public void onPlayerNameUpdate(TMP_InputField playerNameInput) 
+    {
+        PhotonNetwork.NickName = playerNameInput.text;
+    }
+
+    public override void OnJoinedRoom()
+    {
+        SetScreen(lobbyScreen);
+
+        // since there's now a player in the lobby, tell everyone to update the lobby UI
+        photonView.RPC("UpadteLobbyUI", RpcTarget.All);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        // we don't RPC it like when we join the lobby
+        // that's because OnJoinRoom is only called for the client who just joined
+        // OnPlayerLeftRoom gets called for all clients in the room, so we don't need to RPC
+
+        UpdateLobbyUI();
+    }
+
+    [PunRPC]
+    public void UpdateLobbyUI()
+    {
+        playerListText.text = "";
+        
+        //display all the players currently in the lobby
+        foreach(Player player in PhotonNetwork.PlayerList) 
+        {
+            playerListText.text += player.NickName + "\n";
+        }
+
+        //only the host can start the game
+        if(PhotonNetwork.IsMasterClient) 
+            startGameButton.interactable = true;
+        else
+            startGameButton.interactable = false;
+    }
+
+    public void OnLeaveLobbyButton()
+    {
+        PhotonNetwork.LeaveRoom();
+        SetScreen(mainScreen);
+    }
+
+    public void OnStartGameButton()
+    {
+        NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "Game");
+    }
 }
