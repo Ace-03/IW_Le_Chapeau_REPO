@@ -6,22 +6,6 @@ using Photon.Pun;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        PhotonNetwork.ConnectUsingSettings();
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //instance
     public static NetworkManager instance;
 
@@ -38,6 +22,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     //atempt to create a new room
     public void CreateRoom(string roomName)
     { 
@@ -47,7 +43,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     //atempt to join an existing room
     public void JoinRoom (string roomName) 
     {
-        PhotonNetwork.LoadLevel(roomName);
+        PhotonNetwork.JoinRoom(roomName);
     }
 
     //change the scene using Photon's system

@@ -72,7 +72,7 @@ public class Menu : MonoBehaviourPunCallbacks
         SetScreen(lobbyScreen);
 
         // since there's now a player in the lobby, tell everyone to update the lobby UI
-        photonView.RPC("UpadteLobbyUI", RpcTarget.All);
+        photonView.RPC("UpdateLobbyUI", RpcTarget.All);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
