@@ -58,7 +58,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to master server");
-        CreateRoom("testroom");
+        //CreateRoom("testroom"); --> I'm not sure if this line is needed but if I keep it in then it causes problems.
     }
 
     public override void OnCreatedRoom()
