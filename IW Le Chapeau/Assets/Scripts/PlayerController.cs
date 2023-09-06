@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [HideInInspector]
     public int id;
@@ -34,6 +34,23 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
             TryJump();
+    }
+
+    // called when the player object is instanizted
+    [PunRPC]
+    public void Initialize(Player player)
+    { 
+        photonPlayer = player;
+        id = player.ActorNumber;
+
+        GameManager.instance.players[id - 1] = this;
+
+        //give the first player the hat
+
+        // if this isn't our local player, disable as that's 
+        // controlled by the user and synced to all other clients
+        if(!photonView.IsMine)
+            rig.isKinematic = true;
     }
 
     void Move()
