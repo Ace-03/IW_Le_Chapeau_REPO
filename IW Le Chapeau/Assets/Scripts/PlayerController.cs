@@ -51,6 +51,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // controlled by the user and synced to all other clients
         if(!photonView.IsMine)
             rig.isKinematic = true;
+
+        // give the first player the hat
+        if (id == 1)
+            GameManager.instance.GiveHat(id, true);
     }
 
     void Move()
@@ -69,4 +73,29 @@ public class PlayerController : MonoBehaviourPunCallbacks
             rig.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
     }
 
+    // sets the player's hat active or not
+    public void SetHat(bool hasHat)
+    {
+        hatObject.SetActive(hasHat);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!photonView.IsMine)
+            return;
+        // did we hit another player?
+        if (collision.gameObject.CompareTag("Player"))
+        { 
+            // do they have the hat?
+            if(GameManager.instance.GetPlayer(collision.gameObject).id == GameManager.instance.playerWithHat) 
+            {
+                //can we get the hat?
+                if (GameManager.instance.CanGetHat())
+                {
+                    // give us the hat
+                    GameManager.instance.photonView.RPC("GiveHat", RpcTarget.All, id, false);
+                }
+            }
+        }
+    }
 }
