@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
+
 using System.Linq;
-using UnityEngine.VFX;
+
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -32,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
 
     // Start is called before the first frame update
+    [PunRPC]
     void Start()
     {
         players = new PlayerController[PhotonNetwork.PlayerList.Length];
@@ -98,5 +98,23 @@ public class GameManager : MonoBehaviourPunCallbacks
             return false;
     }
 
+    [PunRPC]
+    void WinGame(int playerId)
+    {
+        gameEnded = true;
+        PlayerController player = GetPlayer(playerId);
+        // set the UI to show who's won
 
+        Invoke("GoBackToMenu", 3.0f);
+    }
+
+    void GoBackToMenu () 
+    {
+        PhotonNetwork.LeaveRoom();
+        NetworkManager.instance.ChangeScene("Menu");
+    }
+
+ 
 }
+
+

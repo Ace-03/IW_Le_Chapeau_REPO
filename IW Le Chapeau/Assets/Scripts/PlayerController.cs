@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector]
     public int id;
@@ -32,8 +32,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         Move();
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             TryJump();
+
+        // the host will check if the player has won
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (curHatTime >= GameManager.instance.timeToWin && !GameManager.instance.gameEnded)
+            { 
+                GameManager.instance.gameEnded = true;
+                GameManager.instance.photonView.RPC("WinGame", RpcTarget.All, id);
+            }
+        }
+
+        // track the amount of time we're wearing the hat
+        if (hatObject.activeInHierarchy)
+            curHatTime += Time.deltaTime;
     }
 
     // called when the player object is instanizted
@@ -67,7 +81,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void TryJump()
     {
-        Ray ray = new Ray(transform.position, Vector3.down);
+        Ray ray = new Ray(this.transform.position, Vector3.down);
 
         if(Physics.Raycast(ray, 0.7f))
             rig.AddForce(Vector3.up * jumpforce, ForceMode.Impulse);
@@ -96,6 +110,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     GameManager.instance.photonView.RPC("GiveHat", RpcTarget.All, id, false);
                 }
             }
+        }
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(curHatTime);
+        }
+        else if (stream.IsReading)
+        {
+            curHatTime = (float)stream.ReceiveNext();
         }
     }
 }
