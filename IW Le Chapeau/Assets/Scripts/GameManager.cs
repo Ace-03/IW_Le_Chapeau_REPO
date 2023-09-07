@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // instance
     public static GameManager instance;
 
+
     void Awake()
     {
         // instance
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         // set the UI to show who's won
 
         Invoke("GoBackToMenu", 3.0f);
+
+        GameUI.instance.setWinText(player.photonPlayer.NickName);
     }
 
     void GoBackToMenu () 
