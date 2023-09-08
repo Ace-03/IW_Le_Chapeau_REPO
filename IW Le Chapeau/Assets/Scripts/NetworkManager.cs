@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             //set the instace
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
     }
 

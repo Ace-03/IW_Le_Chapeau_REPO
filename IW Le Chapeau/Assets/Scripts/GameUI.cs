@@ -44,7 +44,7 @@ public class GameUI : MonoBehaviour
     public void setWinText (string winnerName)
     { 
         winText.gameObject.SetActive(true);
-        winText.text = winnerName + "wins";
+        winText.text = winnerName + " wins";
     }
 
     void InitializePlayerUI()
