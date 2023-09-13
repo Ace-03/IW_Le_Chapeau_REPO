@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEditor.Experimental.GraphView;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -20,6 +21,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     public Rigidbody rig;
     public Player photonPlayer;
+    public Material red;
+    public Material green;
+    public Material blue;
+    public Material purple;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +74,23 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // give the first player the hat
         if (id == 1)
             GameManager.instance.GiveHat(id, true);
+
+        // gives player a color
+        setColor(id);
+    }
+
+
+    [PunRPC]
+    public void setColor(int c)
+    { 
+        if(c == 1)
+            this.transform.gameObject.GetComponent<Renderer>().material = red;
+        else if(c == 2)
+            this.transform.gameObject.GetComponent<Renderer>().material = green;
+        else if(c == 3)
+            this.transform.gameObject.GetComponent<Renderer>().material = blue;
+        else if(c == 4)
+            this.transform.gameObject.GetComponent<Renderer>().material = purple;
     }
 
     void Move()
