@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEditor.Experimental.GraphView;
 
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -14,6 +13,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public float movespeed;
     public float jumpforce;
     public GameObject hatObject;
+    public GameObject swordObject;
+    
 
     [HideInInspector]
     public float curHatTime;
@@ -21,10 +22,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [Header("Components")]
     public Rigidbody rig;
     public Player photonPlayer;
-    public Material red;
-    public Material green;
-    public Material blue;
-    public Material purple;
+    public Material[] colors;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +51,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // track the amount of time we're wearing the hat
         if (hatObject.activeInHierarchy)
             curHatTime += Time.deltaTime;
+
     }
 
     // called when the player object is instanizted
@@ -76,21 +75,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             GameManager.instance.GiveHat(id, true);
 
         // gives player a color
-        setColor(id);
+        setColor();
     }
 
 
     [PunRPC]
-    public void setColor(int c)
-    { 
-        if(c == 1)
-            this.transform.gameObject.GetComponent<Renderer>().material = red;
-        else if(c == 2)
-            this.transform.gameObject.GetComponent<Renderer>().material = green;
-        else if(c == 3)
-            this.transform.gameObject.GetComponent<Renderer>().material = blue;
-        else if(c == 4)
-            this.transform.gameObject.GetComponent<Renderer>().material = purple;
+    public void setColor()
+    {
+        this.transform.gameObject.GetComponent<Renderer>().material = colors[id - 1];
     }
 
     void Move()
@@ -113,10 +105,17 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     public void SetHat(bool hasHat)
     {
         hatObject.SetActive(hasHat);
+        swordObject.SetActive(hasHat);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // checks if player if out of bounds
+        if (collision.gameObject.CompareTag("OFB"))
+        {
+            this.gameObject.transform.position = new Vector3(0f, 4f, 0f);
+        }
+
         if (!photonView.IsMine)
             return;
         // did we hit another player?
@@ -133,6 +132,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
         }
+
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     [PunRPC]
