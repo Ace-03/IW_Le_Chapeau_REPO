@@ -116,6 +116,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             this.gameObject.transform.position = new Vector3(0f, 4f, 0f);
         }
 
+        if (collision.gameObject.CompareTag("hitBox"))
+        { 
+            // add knockback here *************************************************
+        }
+
         if (!photonView.IsMine)
             return;
         // did we hit another player?
