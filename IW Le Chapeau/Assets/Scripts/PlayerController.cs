@@ -33,11 +33,14 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (photonView.IsMine)
+        {
+            Move();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            TryJump();
-
+            if (Input.GetKeyDown(KeyCode.Space))
+                TryJump();
+        }
+        
         // the host will check if the player has won
         if (PhotonNetwork.IsMasterClient)
         {
@@ -67,8 +70,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
         // if this isn't our local player, disable as that's 
         // controlled by the user and synced to all other clients
-        if(!photonView.IsMine)
-            rig.isKinematic = true;
+        //if(!photonView.IsMine)
+            //rig.isKinematic = true;
 
         // give the first player the hat
         if (id == 1)
@@ -113,12 +116,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         // checks if player if out of bounds
         if (collision.gameObject.CompareTag("OFB"))
         {
-            this.gameObject.transform.position = new Vector3(0f, 4f, 0f);
+            this.gameObject.transform.position = new Vector3(0f, 7f, 0f);
         }
 
         if (collision.gameObject.CompareTag("hitBox"))
         { 
-            // add knockback here *************************************************
+            
         }
 
         if (!photonView.IsMine)
@@ -139,6 +142,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
         }
 
     }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
